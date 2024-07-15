@@ -179,7 +179,7 @@ def backward_induction(history_obj):
             new_v = backward_induction(new_history)
             if new_v > v:
                 v = new_v
-                best_action = action
+                best_action = str(action)
         strategy_dict_x[str(history_obj.history)] = best_action
         return v
     
@@ -191,7 +191,7 @@ def backward_induction(history_obj):
             new_v = backward_induction(new_history)
             if new_v < v:
                 v = new_v
-                best_action = action
+                best_action = str(action)
         strategy_dict_o[str(history_obj.history)] = best_action
         return v
     
