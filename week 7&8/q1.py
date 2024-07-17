@@ -161,15 +161,17 @@ def backward_induction(history_obj):
     # actions. But since tictactoe is a PIEFG, there always exists an optimal deterministic strategy (SPNE). So your
     # policy will be something like this {"0": 1, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0} where
     # "0" was the one of the best actions for the current player/history.
-
+    board_str = ''.join([str(history_obj.history[i]) for i in range(len(history_obj.history))])
+    action_dict = {"0":0, "1":0, "2":0, "3":0, "4":0, "5":0, "6":0, "7":0, "8":0}
+    
     if history_obj.is_terminal_history():
         return history_obj.get_utility_given_terminal_history()
     
-    if history_obj.player == 'x' and str(history_obj.history) in strategy_dict_x:
-        return strategy_dict_x[str(history_obj.history)]
+    if history_obj.player == 'x' and board_str in strategy_dict_x:
+        return strategy_dict_x[board_str]
     
-    if history_obj.player == 'o' and str(history_obj.history) in strategy_dict_o:
-        return strategy_dict_o[str(history_obj.history)]
+    if history_obj.player == 'o' and board_str in strategy_dict_o:
+        return strategy_dict_o[board_str]
     
     if history_obj.player == 'x':
         v = -math.inf
@@ -180,7 +182,8 @@ def backward_induction(history_obj):
             if new_v > v:
                 v = new_v
                 best_action = str(action)
-        strategy_dict_x[str(history_obj.history)] = best_action
+                action_dict[best_action] = 1
+        strategy_dict_x[board_str] = action_dict
         return v
     
     if history_obj.player == 'o':
@@ -192,7 +195,8 @@ def backward_induction(history_obj):
             if new_v < v:
                 v = new_v
                 best_action = str(action)
-        strategy_dict_o[str(history_obj.history)] = best_action
+                action_dict[best_action] = 1
+        strategy_dict_o[board_str] = action_dict
         return v
     
     
